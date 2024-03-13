@@ -22,17 +22,8 @@ func main() {
 		panic(err)
 	}
 
-	// var (
-	// 	key   = []byte("dbname")
-	// 	value = []byte("minibitcask")
-	// )
-
-	fmt.Println("请输入命令：")
-	fmt.Println("1.put")
-	fmt.Println("2.get")
-	fmt.Println("3.del")
-	fmt.Println("4.merge")
-	fmt.Println("5.close")
+	//输出指令提示
+	fmt.Println("请输入命令：\n1.put\n2.get\n3.del\n4.merge\n5.close")
 
 	go func() {
 		for {
@@ -49,13 +40,13 @@ func main() {
 func ReceiveOrder(order int) {
 	switch order {
 	case 1:
-		fmt.Println("请输入key和value，并以 空格 作为分割")
+		fmt.Println("请输入key和value,并以 空格 作为分割")
 		fmt.Scan(&key, &value)
 		err = Db.Put(key, value)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("1. put kv successfully, key: %s, value: %s.\n", string(key), string(value))
+		fmt.Printf("1. put kv successfully, key: %s, value: %s.\n请输入下一步指令\n", string(key), string(value))
 	case 2:
 		fmt.Println("请输入要查询的key")
 		fmt.Scan(&key)
@@ -63,7 +54,7 @@ func ReceiveOrder(order int) {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("get value of key %s, the value of key %s is %s.\n", string(key), string(key), string(cur))
+		fmt.Printf("get value of key %s, the value of key %s is %s.\n请输入下一步指令\n", string(key), string(key), string(cur))
 
 	case 3:
 		fmt.Println("请输入要删除的key")
@@ -72,11 +63,11 @@ func ReceiveOrder(order int) {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("delete key %s.\n", string(key))
+		fmt.Printf("delete key %s.\n请输入下一步指令\n", string(key))
 
 	case 4:
 		Db.Merge()
-		fmt.Println("compact data to new dbfile.")
+		fmt.Println("compact data to new dbfile.\n请输入下一步指令")
 
 	case 5:
 		Db.Close()
